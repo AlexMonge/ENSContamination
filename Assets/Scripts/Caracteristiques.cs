@@ -31,8 +31,6 @@ public class Caracteristiques : MonoBehaviour {
     {
         GetComponent<Renderer>().material = etudiantInfecte;
         GetComponent<Caracteristiques>().setInfecte(true);
-        GetComponent<IA>().maxValueCurrentPath();
-        GetComponent<IA>().doubleVitesse();
     }
 
     public void setInfecte(bool infecte) { this.infecte = infecte; }
