@@ -20,7 +20,7 @@ public class MushGen : MonoBehaviour {
         if (generes > 0)
         {
             GameObject go = Instantiate<GameObject>(gameObjects[Random.Range(0, gameObjects.Length)]);
-            go.transform.localPosition = new Vector3(Random.Range(-50, 50), 1, Random.Range(-50, 50));
+            go.transform.localPosition = new Vector3(Random.Range(-50, 50)-10, 1, Random.Range(-50, 50)-50);
             --generes;
         }
 	}
