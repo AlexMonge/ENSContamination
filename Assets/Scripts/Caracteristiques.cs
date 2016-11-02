@@ -9,23 +9,22 @@ public class Caracteristiques : MonoBehaviour {
     public bool protect;
 
     // Use this for initialization
-    void Start () {
-        int perinf = Random.Range(1, 50);
-        if (perinf == 2)
-        {
+    void Start () 
+    {
+        int perinf = Random.Range(0, 50);
+
+        if (perinf == 0)
             infecte = true;
-        }
         else
-        {
             infecte = false;
-        }
+
         protect = false;
 	}
 	
 	// Update is called once per frame
-	void Update () {        
+	void Update () 
+    {        
         OnTriggerEnter(GetComponent<Collider>()); 
-        
     }
 
     void OnCollisionEnter(Collision collision)
@@ -33,12 +32,8 @@ public class Caracteristiques : MonoBehaviour {
         GameObject source = collision.gameObject;
 
         if (source.tag.Equals("Personnage") && protect == false)
-        {
             if (source.GetComponent<Caracteristiques>().isInfecte())
-            {
                 GetComponent<Caracteristiques>().infecter();
-            }
-        }       
     }
 
     void OnTriggerEnter(Collider bc)

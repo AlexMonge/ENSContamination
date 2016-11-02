@@ -47,8 +47,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Caracteristiques.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
+     <Compile Include="Assets\Scripts\Generation.cs" />
      <Compile Include="Assets\Scripts\IA.cs" />
-     <Compile Include="Assets\Scripts\MushGen.cs" />
      <Compile Include="Assets\Scripts\Utils.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

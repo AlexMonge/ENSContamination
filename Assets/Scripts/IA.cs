@@ -18,13 +18,10 @@ public class IA : MonoBehaviour {
     void Update()
     {
         if (destination.name.Contains("Toilettes"))
-        {
             attendre = false;
-        }
         else
-        {
             attendre = true;
-        }
+
         StartCoroutine(attente());         
     }
 
@@ -35,14 +32,12 @@ public class IA : MonoBehaviour {
         while (movingTo.magnitude < 2)
         {
             destination = initDestination();
+
             if (attendre == true)
-            {
                 yield return new WaitForSeconds(8);
-            }
             else
-            {
                 yield return null;
-            }
+
             agent.SetDestination(destination.position);
         }
        
@@ -52,86 +47,39 @@ public class IA : MonoBehaviour {
     {
         int zone = Random.Range(1, 101);
 
-        if (zone >=1 && zone <6)
-        {            
-            GameObject dest = GameObject.Find("Toilettes");
-            Transform[] possibilites = new Transform[dest.transform.childCount];
-            int i = 0;
-
-            foreach (Transform d in dest.transform)
-                possibilites[i++] = d;
-
-            return possibilites[Random.Range(0, possibilites.Length)];
-        }
+        if (zone >= 1 && zone < 6)
+            return chercherLieux("Toilettes");
 
         if (zone >= 6 && zone < 51)
-        {
-            GameObject dest = GameObject.Find("Patio");
-            Transform[] possibilites = new Transform[dest.transform.childCount];
-            int i = 0;
-
-            foreach (Transform d in dest.transform)
-                possibilites[i++] = d;
-
-            return possibilites[Random.Range(0, possibilites.Length)];
-        }
+            return chercherLieux("Patio");
 
         if (zone >= 51 && zone < 56)
-        {
-            GameObject dest = GameObject.Find("O108");
-            Transform[] possibilites = new Transform[dest.transform.childCount];
-            int i = 0;
-
-            foreach (Transform d in dest.transform)
-                possibilites[i++] = d;
-
-            return possibilites[Random.Range(0, possibilites.Length)];
-        }
+            return chercherLieux("O108");
 
         if (zone >= 56 && zone < 61)
-        {
-            GameObject dest = GameObject.Find("S101");
-            Transform[] possibilites = new Transform[dest.transform.childCount];
-            int i = 0;
+            return chercherLieux("S101");
 
+        if (zone >= 61 && zone < 71)
+            return chercherLieux("Foyer");
+
+        if (zone >= 71 && zone < 101)
+            return chercherLieux("Info");
+
+        return null;
+    }
+
+    private Transform chercherLieux(string lieu)
+    {
+        GameObject dest = GameObject.Find(lieu);
+        Transform[] possibilites = new Transform[dest.transform.childCount];
+        int i = 0;
+
+        if (possibilites.Length == 0)
+            return dest.transform;
+        else
             foreach (Transform d in dest.transform)
                 possibilites[i++] = d;
 
-            return possibilites[Random.Range(0, possibilites.Length)];
-        }
-
-        if (zone >= 61 && zone < 71)
-        {
-            GameObject dest = GameObject.Find("Foyer");
-            
-            return dest.transform;
-        }
-
-        if (zone >= 71 && zone < 81)
-        {
-            GameObject dest = GameObject.Find("S110");
-
-            return dest.transform;
-        }
-
-        if (zone >= 81 && zone < 91)
-        {
-            GameObject dest = GameObject.Find("S111");
-
-            return dest.transform;
-        }
-
-        if (zone >= 91 && zone < 101)
-        {
-            GameObject dest = GameObject.Find("S112");
-
-            return dest.transform;
-        }
-
-        else
-        {
-            return null;
-        }
-
+        return possibilites[Random.Range(0, possibilites.Length)];
     }
 }
