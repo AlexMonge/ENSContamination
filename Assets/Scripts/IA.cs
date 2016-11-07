@@ -46,7 +46,7 @@ public class IA : MonoBehaviour {
     private Transform initDestination()
     {
         int zone = Random.Range(1, 101);
-
+        
         if (zone >= 1 && zone < 6)
             return chercherLieux("Toilettes");
 
@@ -82,4 +82,8 @@ public class IA : MonoBehaviour {
 
         return possibilites[Random.Range(0, possibilites.Length)];
     }
+
+    public Vector3 GetMovingTo() { return movingTo; }
+    public void SetMovingTo(Vector3 value) { movingTo = value; }
+   
 }

@@ -5,9 +5,10 @@ public class Caracteristiques : MonoBehaviour {
 
     public Material etudiantInfecte;
     public Material etudiant;
+    public IA Ia;
     public bool infecte;
     public bool protect;
-
+    
     // Use this for initialization
     void Start () 
     {
@@ -39,10 +40,10 @@ public class Caracteristiques : MonoBehaviour {
     void OnTriggerEnter(Collider bc)
     {
         GameObject source = bc.gameObject;
-
+        
         if (source.tag.Equals("Boss"))
         {
-            GetComponent<Caracteristiques>().desinfecter();
+            GetComponent<Caracteristiques>().desinfecter();            
             protect = true;
         }        
     }
