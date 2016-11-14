@@ -8,21 +8,24 @@ public class IA : MonoBehaviour {
     private Vector3 movingTo;
     private bool attendre = false;
 
+	private Caractere caractere;
+
     void Start()
     {
-        destination = initDestination();
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        agent.SetDestination(destination.position);
+		caractere = new Caractere ();
+		destination = initDestination();
+		agent = gameObject.GetComponent<NavMeshAgent>();
+		agent.SetDestination(destination.position);
     }
 
     void Update()
     {
-        if (destination.name.Contains("Toilettes"))
-            attendre = false;
-        else
-            attendre = true;
+		if (destination.name.Contains ("Toilettes"))
+			attendre = false;
+		else
+			attendre = true;
 
-        StartCoroutine(attente());         
+		StartCoroutine (attente ());         
     }
 
     IEnumerator attente()
@@ -46,26 +49,33 @@ public class IA : MonoBehaviour {
     private Transform initDestination()
     {
         int zone = Random.Range(1, 101);
+
+		if (zone >= 1 && zone < 6)
+			return chercherLieux ("Toilettes");
+		else 
+		{
+			zone = Random.Range (0, 101);
+
+			if (caractere.inRandomRange (zone, ECaractere.INFORMATIQUE))
+				return chercherLieux ("Info");
+
+			if (caractere.inRandomRange (zone, ECaractere.BIBLI))
+				return chercherLieux ("Foyer");
+
+			if (caractere.inRandomRange (zone, ECaractere.SALLECOURS)) {
+				zone = Random.Range (0, 2);
+
+				if (zone == 0)
+					return chercherLieux ("O108");
+				else
+					return chercherLieux ("S101");
+			}
+
+			if (caractere.inRandomRange (zone, ECaractere.PAUSE))
+				return chercherLieux ("Patio");
+		}
         
-        if (zone >= 1 && zone < 6)
-            return chercherLieux("Toilettes");
-
-        if (zone >= 6 && zone < 51)
-            return chercherLieux("Patio");
-
-        if (zone >= 51 && zone < 56)
-            return chercherLieux("O108");
-
-        if (zone >= 56 && zone < 61)
-            return chercherLieux("S101");
-
-        if (zone >= 61 && zone < 71)
-            return chercherLieux("Foyer");
-
-        if (zone >= 71 && zone < 101)
-            return chercherLieux("Info");
-
-        return null;
+		return chercherLieux ("Patio");
     }
 
     private Transform chercherLieux(string lieu)
@@ -82,8 +92,4 @@ public class IA : MonoBehaviour {
 
         return possibilites[Random.Range(0, possibilites.Length)];
     }
-
-    public Vector3 GetMovingTo() { return movingTo; }
-    public void SetMovingTo(Vector3 value) { movingTo = value; }
-   
 }
