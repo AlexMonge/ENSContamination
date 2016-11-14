@@ -1,7 +1,7 @@
-/Library
-/obj
-/ProjectSettings
-/Temp
+Library/
+obj/
+ProjectSettings/
+Temp/
 *.csproj
 *.sln
 *.suo
