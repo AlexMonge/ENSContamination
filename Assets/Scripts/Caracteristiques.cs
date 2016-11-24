@@ -5,8 +5,10 @@ public class Caracteristiques : MonoBehaviour {
 
     public Material etudiantInfecte;
     public Material etudiant;
+    public NavMeshAgent nav;
     public bool infecte;
     public bool protect;
+    public bool fear = false;
 
     // Use this for initialization
     void Start () 
@@ -39,6 +41,19 @@ public class Caracteristiques : MonoBehaviour {
     void OnTriggerEnter(Collider bc)
     {
         GameObject source = bc.gameObject;
+
+        if (source.tag.Equals("Personnage") && fear == true && source.GetComponent<Caracteristiques>().isInfecte())
+        {
+            Vector3 test = source.GetComponent<Caracteristiques>().nav.desiredVelocity;
+            if (test == new Vector3(0, 0, 0))
+            {
+
+            }
+            else
+            {
+                this.nav.velocity = test;
+            }
+        }
 
         if (source.tag.Equals("Boss"))
         {
