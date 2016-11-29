@@ -44,14 +44,16 @@ public class Caracteristiques : MonoBehaviour {
 
         if (source.tag.Equals("Personnage") && fear == true && source.GetComponent<Caracteristiques>().isInfecte())
         {
-            Vector3 test = source.GetComponent<Caracteristiques>().nav.desiredVelocity;
+            Vector3 test = source.GetComponent<Caracteristiques>().nav.velocity;
             if (test == new Vector3(0, 0, 0))
             {
-
+                this.transform.position = this.transform.position;
             }
             else
             {
-                this.nav.velocity = test;
+                Vector3 target = source.GetComponent<Caracteristiques>().nav.nextPosition - source.GetComponent<Caracteristiques>().nav.transform.position;
+                
+                this.nav.nextPosition = this.nav.nextPosition + target;
             }
         }
 
