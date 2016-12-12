@@ -10,6 +10,7 @@ public class Caracteristiques : MonoBehaviour {
     public bool protect;
     public bool fear = false;
 	public bool soignable = true;
+    public bool suivi = false;
 
     // Use this for initialization
     void Start () 
@@ -42,7 +43,7 @@ public class Caracteristiques : MonoBehaviour {
                 GetComponent<Caracteristiques>().infecter();
     }
 
-    void OnTriggerExit(Collider bc)
+    void OnTriggerStay(Collider bc)
     {
         GameObject source = bc.gameObject;
 

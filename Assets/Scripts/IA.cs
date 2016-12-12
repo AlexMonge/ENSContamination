@@ -9,7 +9,6 @@ public class IA : MonoBehaviour {
     private bool attendre = false;
 
 	private Caractere caractere;
-	private Animator animator;
 
 
     void Start()
@@ -18,9 +17,6 @@ public class IA : MonoBehaviour {
 		destination = initDestination();
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		agent.SetDestination(destination.position);
-		animator = gameObject.GetComponent<Animator>();
-
-		if (animator != null) animator.SetInteger ("Marche", 1);
     }
 
     void Update()
@@ -36,14 +32,13 @@ public class IA : MonoBehaviour {
     IEnumerator attente()
     {
         movingTo = destination.position - transform.position;
-		if (animator != null) animator.SetInteger ("Marche", 1);
+		
 
         while (movingTo.magnitude < 2)
         {
             destination = initDestination();
 
 			if (attendre == true) {
-				if (animator != null) animator.SetInteger ("Marche", 0);
 				yield return new WaitForSeconds (8);
 			}
 			else
