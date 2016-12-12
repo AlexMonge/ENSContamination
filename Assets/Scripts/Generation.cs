@@ -8,9 +8,9 @@ public class Generation : MonoBehaviour {
     private int generes;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        if (nb <= 0)
+        if (nb < 0)
             nb = 10;
 
         generes = nb;

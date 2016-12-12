@@ -9,6 +9,7 @@ public class Caracteristiques : MonoBehaviour {
     public bool infecte;
     public bool protect;
     public bool fear = false;
+	public bool soignable = true;
 
     // Use this for initialization
     void Start () 
@@ -17,7 +18,7 @@ public class Caracteristiques : MonoBehaviour {
 
         if (perinf == 0)
             infecte = true;
-        else
+		else if (soignable)
             infecte = false;
 
         protect = false;
@@ -26,42 +27,19 @@ public class Caracteristiques : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {        
-        OnTriggerEnter(GetComponent<Collider>()); 
+		if (tag.Equals ("Satan")) {
+			soignable = false;
+			infecte = true;
+		}
     }
 
     void OnCollisionEnter(Collision collision)
     {
         GameObject source = collision.gameObject;
 
-        if (source.tag.Equals("Personnage") && protect == false)
+        if ((source.tag.Equals("Personnage") || source.tag.Equals("Satan")) && protect == false)
             if (source.GetComponent<Caracteristiques>().isInfecte())
                 GetComponent<Caracteristiques>().infecter();
-    }
-
-    void OnTriggerEnter(Collider bc)
-    {
-        GameObject source = bc.gameObject;
-
-        if (source.tag.Equals("Personnage") && fear == true && source.GetComponent<Caracteristiques>().isInfecte())
-        {
-            Vector3 test = source.GetComponent<Caracteristiques>().nav.velocity;
-            if (test == new Vector3(0, 0, 0))
-            {
-                this.transform.position = this.transform.position;
-            }
-            else
-            {
-                Vector3 target = source.GetComponent<Caracteristiques>().nav.nextPosition - source.GetComponent<Caracteristiques>().nav.transform.position;
-                
-                this.nav.nextPosition = this.nav.nextPosition + target;
-            }
-        }
-
-        if (source.tag.Equals("Boss"))
-        {
-            GetComponent<Caracteristiques>().desinfecter();
-            protect = true;
-        }        
     }
 
     void OnTriggerExit(Collider bc)
@@ -77,13 +55,13 @@ public class Caracteristiques : MonoBehaviour {
 
     public void infecter()
     {
-        GetComponent<Renderer>().material = etudiantInfecte;
+		if (GetComponent<Renderer>() != null) GetComponent<Renderer>().material = etudiantInfecte;
         GetComponent<Caracteristiques>().setInfecte(true);
     }
 
     public void desinfecter()
     {
-        GetComponent<Renderer>().material = etudiant;
+		if (GetComponent<Renderer>() != null) GetComponent<Renderer>().material = etudiant;
         GetComponent<Caracteristiques>().setInfecte(false);
     }
 
