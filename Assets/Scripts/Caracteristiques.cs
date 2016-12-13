@@ -7,8 +7,8 @@ public class Caracteristiques : MonoBehaviour {
     public Material etudiant;
     public NavMeshAgent nav;
     public bool infecte;
-    public bool protect;
-    public bool fear = false;
+    public bool resistant;
+    public bool peur = false;
 	public bool soignable = true;
     public bool suivi = false;
 
@@ -22,7 +22,7 @@ public class Caracteristiques : MonoBehaviour {
 		else if (soignable)
             infecte = false;
 
-        protect = false;
+        resistant = false;
 	}
 	
 	// Update is called once per frame
@@ -32,13 +32,20 @@ public class Caracteristiques : MonoBehaviour {
 			soignable = false;
 			infecte = true;
 		}
+
+        if (tag.Equals("Boss"))
+        {
+            soignable = true;
+            resistant = true;
+            infecte = false;
+        }
     }
 
     void OnCollisionEnter(Collision collision)
     {
         GameObject source = collision.gameObject;
 
-        if ((source.tag.Equals("Personnage") || source.tag.Equals("Satan")) && protect == false)
+        if ((source.tag.Equals("Personnage") || source.tag.Equals("Satan")) && !resistant)
             if (source.GetComponent<Caracteristiques>().isInfecte())
                 GetComponent<Caracteristiques>().infecter();
     }
@@ -48,10 +55,7 @@ public class Caracteristiques : MonoBehaviour {
         GameObject source = bc.gameObject;
 
         if (source.tag.Equals("Boss"))
-        {
             GetComponent<Caracteristiques>().desinfecter();
-            protect = false;
-        }
     }
 
     public void infecter()

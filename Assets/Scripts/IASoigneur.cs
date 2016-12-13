@@ -3,11 +3,12 @@ using System.Collections;
 
 public class IASoigneur : MonoBehaviour {
 
-    public Transform destination;
+    public Transform bureau;
+    private Transform destination;
     private NavMeshAgent agent;
     private Vector3 movingTo;
-    public Animator animator;
-    public GameObject suit;
+    private Animator animator;
+    private GameObject suit;
 
     // Use this for initialization
     void Start()
@@ -44,6 +45,8 @@ public class IASoigneur : MonoBehaviour {
 
             if (destination != null)
                 agent.SetDestination(destination.position);
+            else
+                agent.SetDestination(bureau.position);
         }
     }
 
