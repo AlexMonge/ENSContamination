@@ -3,20 +3,22 @@ using System.Collections;
 
 public class IA : MonoBehaviour {
 
-    private Transform destination;
+    public Transform destination;
     private NavMeshAgent agent;
     private Vector3 movingTo;
     private bool attendre = false;
+    private Vector3 variationArrivee;
 
 	private Caractere caractere;
 
 
     void Start()
     {
+        variationArrivee = new Vector3();
 		caractere = new Caractere ();
 		destination = initDestination();
 		agent = gameObject.GetComponent<NavMeshAgent>();
-		agent.SetDestination(destination.position);
+		agent.SetDestination(destination.position + variationArrivee);
     }
 
     void Update()
@@ -26,6 +28,16 @@ public class IA : MonoBehaviour {
 		else
 			attendre = true;
 
+        /*movingTo = destination.position - transform.position;
+
+
+        while (movingTo.magnitude < 2)
+        {
+            destination = initDestination();
+
+            agent.SetDestination(destination.position);
+        }*/
+
 		StartCoroutine (attente ());         
     }
 
@@ -34,17 +46,17 @@ public class IA : MonoBehaviour {
         movingTo = destination.position - transform.position;
 		
 
-        while (movingTo.magnitude < 2)
+        while (movingTo.magnitude < 5)
         {
             destination = initDestination();
 
 			if (attendre == true) {
-				yield return new WaitForSeconds (Random.Range(3, 8));
+				yield return new WaitForSeconds (2);
 			}
 			else
 				yield return null;
 
-            agent.SetDestination(destination.position);
+            agent.SetDestination(destination.position + variationArrivee);
         }
        
     }
@@ -54,34 +66,34 @@ public class IA : MonoBehaviour {
         int zone = Random.Range(1, 101);
 
 		if (zone >= 1 && zone < 6)
-            return chercherLieux("Toilettes", false);
+            return chercherLieux("Toilettes", true, 0);
 		else 
 		{
 			zone = Random.Range (0, 101);
 
 			if (caractere.inRandomRange (zone, ECaractere.INFORMATIQUE))
-				return chercherLieux ("Info", true);
+				return chercherLieux ("Info", false, 4);
 
 			if (caractere.inRandomRange (zone, ECaractere.BIBLI))
-                return chercherLieux("Foyer", true);
+                return chercherLieux("Foyer", false, 2);
 
 			if (caractere.inRandomRange (zone, ECaractere.SALLECOURS)) {
 				zone = Random.Range (0, 2);
 
 				if (zone == 0)
-                    return chercherLieux("O108", true);
+                    return chercherLieux("O108", false, 2);
 				else
-                    return chercherLieux("S101", true);
+                    return chercherLieux("S101", false, 3);
 			}
 
 			if (caractere.inRandomRange (zone, ECaractere.PAUSE))
-                return chercherLieux("Patio", true);
+                return chercherLieux("Patio", false, 4);
 		}
 
-        return chercherLieux("Patio", true);
+        return chercherLieux("Patio", false, 4);
     }
 
-    private Transform chercherLieux(string lieu, bool arriveeFixe)
+    private Transform chercherLieux(string lieu, bool arriveeFixe, int radius)
     {
         GameObject dest = GameObject.Find(lieu);
         Transform[] possibilites = new Transform[dest.transform.childCount];
@@ -98,10 +110,10 @@ public class IA : MonoBehaviour {
 
         if (!arriveeFixe)
         {
-            Vector3 variationArrivee = Random.insideUnitSphere * 5;
-            variationArrivee.y = 0;
+            Vector3 variation = Random.insideUnitSphere * radius;
+            variation.y = 0;
 
-            position.transform.position += variationArrivee;
+            variationArrivee = variation;
         }
 
         

@@ -56,9 +56,8 @@ public class IAMicrobe : MonoBehaviour {
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
 
-            if (!soigneurProche(go.transform.position))
+            if (!soigneurProche(go.transform.position) && !soigneurProche(this.transform.position))
             {
-                Debug.Log("Soigneur loin");
                 if (curDistance < distance)
                     if (tag.Equals("Personnage") && (!go.GetComponent<Caracteristiques>().isInfecte() == victimeSaine))
                     {
@@ -66,8 +65,6 @@ public class IAMicrobe : MonoBehaviour {
                         distance = curDistance;
                     }
             }
-            else
-                Debug.Log("Soigneur trop proche");
         }
 
         return proche;
@@ -81,7 +78,7 @@ public class IAMicrobe : MonoBehaviour {
         {
             Vector3 diff = position - soigneur.transform.position;
 
-            if (diff.sqrMagnitude < 20)
+            if (diff.sqrMagnitude < 50)
                 return true;
         }
 
