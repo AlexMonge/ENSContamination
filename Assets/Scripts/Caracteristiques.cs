@@ -56,6 +56,9 @@ public class Caracteristiques : MonoBehaviour {
     {
 		if (GetComponent<Renderer>() != null) GetComponent<Renderer>().material = etudiantInfecte;
         infecte = true;
+
+        if (Random.Range(0, 20) == 0)
+            GetComponent<IA>().agressif();
     }
 
     public void desinfecter()
@@ -63,6 +66,9 @@ public class Caracteristiques : MonoBehaviour {
 		if (GetComponent<Renderer>() != null) GetComponent<Renderer>().material = etudiant;
         infecte = false;
         resistant = true;
+
+        if (GetComponent<IA>().isAgressif())
+            GetComponent<IA>().passif();
     }
 
     public void setInfecte(bool infecte) { this.infecte = infecte; }

@@ -1,26 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IAMicrobe : MonoBehaviour {
+public class IAgressif : IIA {
 
-	public Transform destination;
-	private NavMeshAgent agent;
-	private Vector3 movingTo;
+    private Transform destination;
+    private NavMeshAgent agent;
+    private Vector3 movingTo;
+    private GameObject gameObject;
 
-	// Use this for initialization
-	void Start () {
-		agent = gameObject.GetComponent<NavMeshAgent>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public void Start(GameObject gameObject)
+    {
+        agent = gameObject.GetComponent<NavMeshAgent>();
+        this.gameObject = gameObject;
+    }
 
+    public void Update()
+    {
         destination = chercherVictime();
 
         if (destination != null)
         {
             agent.SetDestination(destination.position);
-            movingTo = destination.position - transform.position;
+            movingTo = destination.position - gameObject.transform.position;
 
             if (movingTo.magnitude < 2)
             {
@@ -35,28 +36,28 @@ public class IAMicrobe : MonoBehaviour {
             if (destination != null)
                 agent.SetDestination(destination.position);
         }
-	}
+    }
 
-	private Transform chercherVictime()
-	{
+    public Transform chercherVictime()
+    {
         GameObject victime = plusProche("Personnage", true);
 
         return (victime == null) ? null : victime.transform;
-	}
+    }
 
-    private GameObject plusProche(string tag, bool victimeSaine)
+    public GameObject plusProche(string tag, bool victimeSaine)
     {
         GameObject[] gos = GameObject.FindGameObjectsWithTag(tag);
         GameObject proche = null;
         float distance = Mathf.Infinity;
-        Vector3 position = transform.position;
+        Vector3 position = gameObject.transform.position;
 
         foreach (GameObject go in gos)
         {
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
 
-            if (!soigneurProche(go.transform.position) && !soigneurProche(this.transform.position))
+            if (!soigneurProche(go.transform.position) && !soigneurProche(gameObject.transform.position))
             {
                 if (curDistance < distance)
                     if (tag.Equals("Personnage") && (!go.GetComponent<Caracteristiques>().isInfecte() == victimeSaine))
@@ -82,6 +83,22 @@ public class IAMicrobe : MonoBehaviour {
                 return true;
         }
 
+        return false;
+    }
+
+
+    public bool isAgressif()
+    {
+        return true;
+    }
+
+    public bool isPassif()
+    {
+        return false;
+    }
+
+    public bool isSoigneur()
+    {
         return false;
     }
 }

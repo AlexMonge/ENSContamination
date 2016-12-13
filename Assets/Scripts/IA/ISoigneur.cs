@@ -1,27 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IASoigneur : MonoBehaviour {
+public class ISoigneur : IIA {
 
-    public Transform bureau;
+    private Transform bureau;
     private Transform destination;
     private NavMeshAgent agent;
     private Vector3 movingTo;
     private Animator animator;
     private GameObject suit;
+    private GameObject gameObject;
 
-    // Use this for initialization
-    void Start()
+    public void Start(GameObject gameObject)
     {
+        this.gameObject = gameObject;
         agent = gameObject.GetComponent<NavMeshAgent>();
         animator = gameObject.GetComponent<Animator>();
 
         if (animator != null) animator.SetInteger("Marche", 0);
         suit = null;
+
+        switch (gameObject.name)
+        {
+            case "Bernard Claverie":
+                bureau = GameObject.Find("Directeur").transform;
+                break;
+
+            case "Isabelle Sese":
+                bureau = GameObject.Find("Administration 2").transform;
+                break;
+
+            case "Jean-Paul":
+                bureau = GameObject.Find("Logistique").transform;
+                break;
+
+            case "Nadège Rodriguez":
+                bureau = GameObject.Find("Administration 1").transform;
+                break;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (animator != null) animator.SetInteger("Marche", 1);
         destination = chercherVictime();
@@ -29,7 +48,7 @@ public class IASoigneur : MonoBehaviour {
         if (destination != null)
         {
             agent.SetDestination(destination.position);
-            movingTo = destination.position - transform.position;
+            movingTo = destination.position - gameObject.transform.position;
 
             if (movingTo.magnitude < 2)
             {
@@ -72,7 +91,7 @@ public class IASoigneur : MonoBehaviour {
         GameObject[] gos = GameObject.FindGameObjectsWithTag(tag);
         GameObject proche = null;
         float distance = Mathf.Infinity;
-        Vector3 position = transform.position;
+        Vector3 position = gameObject.transform.position;
 
         foreach (GameObject go in gos)
         {
@@ -88,5 +107,21 @@ public class IASoigneur : MonoBehaviour {
         }
 
         return proche;
+    }
+
+
+    public bool isAgressif()
+    {
+        return false;
+    }
+
+    public bool isPassif()
+    {
+        return false;
+    }
+
+    public bool isSoigneur()
+    {
+        return true;
     }
 }
