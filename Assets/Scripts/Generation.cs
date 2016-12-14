@@ -24,6 +24,7 @@ public class Generation : MonoBehaviour {
             GameObject go = Instantiate<GameObject>(gameObjects[Random.Range(0, gameObjects.Length)]);
             go.transform.localPosition = new Vector3(Random.Range(-50, 50) - 10, 1, Random.Range(-50, 50) - 50);
             --generes;
+            GetComponent<UIController>().ajouterPersonne();
         }
     }
 }
