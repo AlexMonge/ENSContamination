@@ -54,29 +54,35 @@ public class Caracteristiques : MonoBehaviour {
 
     public void infecter()
     {
-		if (GetComponent<Renderer>() != null) GetComponent<Renderer>().material = etudiantInfecte;
-        infecte = true;
-
-        GetComponent<UIController>().upContamines();
-
-        if (Random.Range(0, 20) == 0)
+        if (!infecte)
         {
-            GetComponent<IA>().agressif();
-            GetComponent<UIController>().upAgressif();
+            if (GetComponent<Renderer>() != null) GetComponent<Renderer>().material = etudiantInfecte;
+            infecte = true;
+
+            GameObject.Find("ENSC").GetComponent<UIController>().upContamines();
+
+            if (Random.Range(0, 20) == 0)
+            {
+                GetComponent<IA>().agressif();
+                GameObject.Find("ENSC").GetComponent<UIController>().upAgressif();
+            }
         }
     }
 
     public void desinfecter()
     {
-		if (GetComponent<Renderer>() != null) GetComponent<Renderer>().material = etudiant;
-        infecte = false;
-        resistant = true;
-        GetComponent<UIController>().downContamines();
-
-        if (GetComponent<IA>().isAgressif())
+        if (infecte)
         {
-            GetComponent<IA>().passif();
-            GetComponent<UIController>().upSains();
+            if (GetComponent<Renderer>() != null) GetComponent<Renderer>().material = etudiant;
+            infecte = false;
+            resistant = true;
+            GameObject.Find("ENSC").GetComponent<UIController>().downContamines();
+
+            if (GetComponent<IA>().isAgressif())
+            {
+                GetComponent<IA>().passif();
+                GameObject.Find("ENSC").GetComponent<UIController>().downAgressif();
+            }
         }
     }
 

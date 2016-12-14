@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour {
 
@@ -8,10 +9,10 @@ public class UIController : MonoBehaviour {
     private int contamines;
     private int sains;
 
-    public TextMesh passifText;
-    public TextMesh agressifText;
-    public TextMesh contaminesText;
-    public TextMesh sainsText;
+    public Text passifText;
+    public Text agressifText;
+    public Text contaminesText;
+    public Text sainsText;
 
 	// Use this for initialization
 	void Start () {
@@ -41,5 +42,5 @@ public class UIController : MonoBehaviour {
     public void upSains() { ++sains; --contamines; }
     public void downSains() { --sains; ++contamines; }
 
-    public void ajouterPersonne() { ++passif; }
+    public void ajouterPersonne() { ++passif; ++sains; }
 }
