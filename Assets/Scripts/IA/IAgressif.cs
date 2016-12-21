@@ -4,13 +4,16 @@ using System.Collections;
 public class IAgressif : IIA {
 
     private Transform destination;
-    private NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
     private Vector3 movingTo;
     private GameObject gameObject;
+    private Caractere caractere;
+
+    public IAgressif(Caractere caractere) { this.caractere = caractere; }
 
     public void Start(GameObject gameObject)
     {
-        agent = gameObject.GetComponent<NavMeshAgent>();
+        agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
         this.gameObject = gameObject;
     }
 
@@ -34,8 +37,11 @@ public class IAgressif : IIA {
             destination = chercherVictime();
 
             if (destination != null)
-                agent.SetDestination(destination.position);
+                agent.SetDestination(GameObject.Find("DepartMicrobe").transform.position);
         }
+
+        if (gameObject.tag.Equals("Satan"))
+            mutation();
     }
 
     public Transform chercherVictime()
@@ -60,7 +66,7 @@ public class IAgressif : IIA {
             if (!soigneurProche(go.transform.position) && !soigneurProche(gameObject.transform.position))
             {
                 if (curDistance < distance)
-                    if (tag.Equals("Personnage") && (!go.GetComponent<Caracteristiques>().isInfecte() == victimeSaine))
+                    if (tag.Equals("Personnage") && (!go.GetComponent<Caracteristiques>().isInfecte() == victimeSaine) && !go.GetComponent<Caracteristiques>().isImmunise() && !go.GetComponent<Caracteristiques>().isResistant())
                     {
                         proche = go;
                         distance = curDistance;
@@ -79,11 +85,35 @@ public class IAgressif : IIA {
         {
             Vector3 diff = position - soigneur.transform.position;
 
-            if (diff.sqrMagnitude < 50)
+            if (diff.sqrMagnitude < 40)
                 return true;
         }
 
         return false;
+    }
+
+    private void mutation()
+    {
+        UIController uic = GameObject.Find("ENSC").GetComponent<UIController>();
+
+        if (uic.getNbPersonne() > 0)
+        {
+            double prctgConta = uic.getPourcentageContamines();
+
+            if (prctgConta < 25f)
+            {
+                agent.speed = 3.666f;
+            }
+            else if (prctgConta < 50f)
+            {
+                agent.speed = 2f;
+            }
+            else
+            {
+                agent.speed = 5f;
+                agent.SetDestination(GameObject.Find("DepartMicrobe").transform.position);
+            }
+        }
     }
 
 
@@ -98,6 +128,16 @@ public class IAgressif : IIA {
     }
 
     public bool isSoigneur()
+    {
+        return false;
+    }
+
+    public bool isAssistance()
+    {
+        return false;
+    }
+
+    public bool isPeur()
     {
         return false;
     }

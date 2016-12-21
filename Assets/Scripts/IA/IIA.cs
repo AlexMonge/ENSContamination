@@ -8,4 +8,6 @@ public interface IIA {
     bool isAgressif();
     bool isPassif();
     bool isSoigneur();
+    bool isAssistance();
+    bool isPeur();
 }

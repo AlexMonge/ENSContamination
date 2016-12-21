@@ -4,22 +4,23 @@ using System.Collections;
 public class IPassif : IIA {
 
     public Transform destination;
-    private NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
     private Vector3 movingTo;
     private bool attendre = false;
     private Vector3 variationArrivee;
-    private Caractere caractere;
     private GameObject gameObject;
     private bool isSleeping;
     private float stopSleepAt;
+    private Caractere caractere;
+
+    public IPassif(Caractere caractere) { this.caractere = caractere; }
 
     public void Start(GameObject gameObject)
     {
         this.gameObject = gameObject;
         variationArrivee = new Vector3();
-        caractere = new Caractere();
         destination = initDestination();
-        agent = gameObject.GetComponent<NavMeshAgent>();
+        agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.SetDestination(destination.position + variationArrivee);
     }
 
@@ -148,6 +149,16 @@ public class IPassif : IIA {
     }
 
     public bool isSoigneur()
+    {
+        return false;
+    }
+
+    public bool isAssistance()
+    {
+        return false;
+    }
+
+    public bool isPeur()
     {
         return false;
     }

@@ -1,52 +1,28 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class ISoigneur : IIA {
+public class IAssistance : IIA {
 
-    private Transform bureau;
     private Transform destination;
     private UnityEngine.AI.NavMeshAgent agent;
     private Vector3 movingTo;
-    private Animator animator;
-    private GameObject suit;
     private GameObject gameObject;
     private Caractere caractere;
 
-    public ISoigneur(Caractere caractere) { this.caractere = caractere; }
+    public IAssistance(Caractere caractere) { this.caractere = caractere; }
 
     public void Start(GameObject gameObject)
     {
         this.gameObject = gameObject;
         agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
-        animator = gameObject.GetComponent<Animator>();
-
-        if (animator != null) animator.SetInteger("Marche", 0);
-        suit = null;
-
-        switch (gameObject.name)
-        {
-            case "Bernard Claverie":
-                bureau = GameObject.Find("Directeur").transform;
-                break;
-
-            case "Isabelle Sese":
-                bureau = GameObject.Find("Administration 2").transform;
-                break;
-
-            case "Jean-Paul":
-                bureau = GameObject.Find("Logistique").transform;
-                break;
-
-            case "Nadège Rodriguez":
-                bureau = GameObject.Find("Administration 1").transform;
-                break;
-        }
+                
     }
 
     public void Update()
     {
-        if (animator != null) animator.SetInteger("Marche", 1);
-        destination = chercherVictime();
+        destination = chercherSoigneur();
 
         if (destination != null)
         {
@@ -55,42 +31,31 @@ public class ISoigneur : IIA {
 
             if (movingTo.magnitude < 2)
             {
-                if (animator != null) animator.SetInteger("Marche", 0);
-                destination = chercherVictime();
+                destination = chercherSoigneur();
                 agent.SetDestination(destination.position);
             }
         }
         else
         {
-            if (animator != null) animator.SetInteger("Marche", 0);
-            destination = chercherVictime();
+            destination = chercherSoigneur();
 
             if (destination != null)
                 agent.SetDestination(destination.position);
-            else
-                agent.SetDestination(bureau.position);
         }
     }
 
-    private Transform chercherVictime()
+    private Transform chercherSoigneur()
     {
-        GameObject victime = plusProche("Personnage", false);
+        GameObject victime = plusProche("Boss", false);
 
         if (victime != null)
-        {
-            suit = victime;
-            victime.GetComponent<Caracteristiques>().suivi = true;
             return victime.transform;
-        }
         else
             return null;
     }
 
     private GameObject plusProche(string tag, bool victimeSaine)
     {
-        if (suit != null)
-            suit.GetComponent<Caracteristiques>().suivi = false;
-
         GameObject[] gos = GameObject.FindGameObjectsWithTag(tag);
         GameObject proche = null;
         float distance = Mathf.Infinity;
@@ -102,7 +67,7 @@ public class ISoigneur : IIA {
             float curDistance = diff.sqrMagnitude;
 
             if (curDistance < distance)
-                if (tag.Equals("Personnage") && (!go.GetComponent<Caracteristiques>().isInfecte() == victimeSaine) && go.GetComponent<Caracteristiques>().suivi == false)
+                if (tag.Equals("Boss"))
                 {
                     proche = go;
                     distance = curDistance;
@@ -111,7 +76,6 @@ public class ISoigneur : IIA {
 
         return proche;
     }
-
 
     public bool isAgressif()
     {
@@ -125,12 +89,12 @@ public class ISoigneur : IIA {
 
     public bool isSoigneur()
     {
-        return true;
+        return false;
     }
 
     public bool isAssistance()
     {
-        return false;
+        return true;
     }
 
     public bool isPeur()
