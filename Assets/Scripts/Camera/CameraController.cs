@@ -3,70 +3,55 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
-    public Camera Camera1;
-    public Camera Camera2;
-    public Camera Camera3;
+    public Camera[] cameras;
 
-    int active = 1;
+    int active = 0;
 
     void Start()
     {
-        Camera1.enabled = true;
-        Camera2.enabled = false;
-        Camera3.enabled = false;  
+        if (cameras.Length > 0)
+        {
+            cameras[0].enabled = true;
+
+            for (int i = 1; i < cameras.Length; ++i)
+            {
+                cameras[i].enabled = false;
+            }
+        }
     }
 
 
     void Update()
     {
-
         //use whatever button you want to toggle
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            switch (active)
+            ++active;
+
+            if (active > cameras.Length - 1)
             {
-                case 1:
-                    Camera1.enabled = false;
-                    Camera3.enabled = true;
-                    active = 3;
-                    break;
+                active = 0;
+                cameras[cameras.Length - 1].enabled = false;
+            }
+            else
+                cameras[active - 1].enabled = false;
 
-                case 2:
-                    Camera2.enabled = false;
-                    Camera1.enabled = true;
-                    active = 1;
-                    break;
-
-                case 3:
-                    Camera3.enabled = false;
-                    Camera2.enabled = true;
-                    active = 2;
-                    break;  
-            }   
+            cameras[active].enabled = true;
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            switch (active)
+            --active;
+
+            if (active < 0)
             {
-                case 1:
-                    Camera1.enabled = false;
-                    Camera2.enabled = true;
-                    active = 2;
-                    break;
-
-                case 2:
-                    Camera2.enabled = false;
-                    Camera3.enabled = true;
-                    active = 3;
-                    break;
-
-                case 3:
-                    Camera3.enabled = false;
-                    Camera1.enabled = true;
-                    active = 1;
-                    break;
+                active = cameras.Length - 1;
+                cameras[0].enabled = false;
             }
+            else
+                cameras[active + 1].enabled = false;
+
+            cameras[active].enabled = true;
         }
     }
 }
