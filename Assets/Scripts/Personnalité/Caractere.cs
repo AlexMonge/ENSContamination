@@ -9,7 +9,8 @@ namespace UnityEngine {
 
 		public Caractere ()
 		{
-			caractere = new int[4];
+            // INFO - BIBLI - COURS - PAUSE
+            caractere = new int[4];
 
 			int randMax = 101;
 			randMax -= caractere[0] = Random.Range(0, randMax);
