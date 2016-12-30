@@ -26,25 +26,30 @@ public class IPassif : IIA {
 
     public void Update()
     {
-        if (!isSleeping)
+        if (destination != null)
         {
-            movingTo = destination.position - gameObject.transform.position;
-
-            if (movingTo.magnitude < 4)
+            if (!isSleeping)
             {
-                sleepSeconds(Random.Range(3, 6));
-                destination = initDestination();
-                agent.SetDestination(destination.position + variationArrivee);
+                movingTo = destination.position - gameObject.transform.position;
+
+                if (movingTo.magnitude < 4)
+                {
+                    sleepSeconds(Random.Range(3, 6));
+                    destination = initDestination();
+                    agent.SetDestination(destination.position + variationArrivee);
+                }
             }
-        }
-        else
-            if (Time.realtimeSinceStartup - stopSleepAt > 0)
+            else
+                if (Time.realtimeSinceStartup - stopSleepAt > 0)
             {
                 Rigidbody body = gameObject.GetComponent<Rigidbody>();
                 body.isKinematic = false;
 
                 isSleeping = false;
             }
+        }
+        else
+            destination = initDestination();
     }
 
     IEnumerator attente()
