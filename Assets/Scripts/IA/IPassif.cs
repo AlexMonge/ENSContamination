@@ -68,11 +68,15 @@ public class IPassif : IIA {
 
     }
 
+    /// <summary>
+    /// Permet d'initialiser la destination en fonction des préférences de la personne
+    /// </summary>
+    /// <returns>Le transform de la destination</returns>
     private Transform initDestination()
     {
-        int zone = Random.Range(1, 101);
+        int zone = Random.Range(0, 101);
 
-        if (zone >= 1 && zone < 6)
+        if (zone >= 0 && zone < 6)
             return chercherLieux("Toilettes", true, 0);
         else
         {
@@ -101,6 +105,13 @@ public class IPassif : IIA {
         return chercherLieux("Patio", false, 4);
     }
 
+    /// <summary>
+    /// Permet à la personne de trouver un lieu
+    /// </summary>
+    /// <param name="lieu">Nom du lieu (Empty dans la vue)</param>
+    /// <param name="arriveeFixe">Si faux, l'arrivée se fera dans un cercle aléatoire autour du point d'arrivée de base</param>
+    /// <param name="radius">Taille du cercle autour du point d'arrivée</param>
+    /// <returns>Le Transform correspondant au lieu trouvé</returns>
     private Transform chercherLieux(string lieu, bool arriveeFixe, int radius)
     {
         GameObject dest = GameObject.Find(lieu);
@@ -128,6 +139,10 @@ public class IPassif : IIA {
         return position;
     }
 
+    /// <summary>
+    /// Permet à la personne de "dormir" pendant x secondes
+    /// </summary>
+    /// <param name="sec">Le nombre de secondes</param>
     private void sleepSeconds(int sec)
     {
         Rigidbody body = gameObject.GetComponent<Rigidbody>();

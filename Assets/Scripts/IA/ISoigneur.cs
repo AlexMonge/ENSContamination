@@ -72,6 +72,10 @@ public class ISoigneur : IIA {
         }
     }
 
+    /// <summary>
+    /// Permet de trouver la victime la plus proche
+    /// </summary>
+    /// <returns>Le Transform de la victime</returns>
     private Transform chercherVictime()
     {
         GameObject victime = plusProche("Personnage", false);
@@ -86,6 +90,12 @@ public class ISoigneur : IIA {
             return null;
     }
 
+    /// <summary>
+    /// Permet de trouver l'entité la plus proche
+    /// </summary>
+    /// <param name="tag">Tag de l'entité</param>
+    /// <param name="victimeSaine">Si vrai, la victime cherchée ne sera pas malade</param>
+    /// <returns>La victime la plus proche</returns>
     private GameObject plusProche(string tag, bool victimeSaine)
     {
         if (suit != null)

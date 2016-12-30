@@ -30,6 +30,13 @@ public class IPeur : IIA {
         movingTo = destination.position - gameObject.transform.position;
     }
 
+    /// <summary>
+    /// Permet à la personne de trouver un refuge dans le lieu voulu
+    /// </summary>
+    /// <param name="lieu">Nom du lieu (Empty dans la vue)</param>
+    /// <param name="arriveeFixe">Si faux, l'arrivée se fera dans un cercle aléatoire autour du point d'arrivée de base</param>
+    /// <param name="radius">Taille du cercle autour du point d'arrivée</param>
+    /// <returns>Le Transform correspondant au refuge trouvé</returns>
     private Transform chercherRefuge(string lieu, bool arriveeFixe, int radius)
     {
         GameObject dest = GameObject.Find(lieu);
@@ -52,7 +59,6 @@ public class IPeur : IIA {
 
             variationArrivee = variation;
         }
-
 
         return position;
     }

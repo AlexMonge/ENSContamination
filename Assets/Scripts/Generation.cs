@@ -5,10 +5,14 @@ public class Generation : MonoBehaviour {
 
     public GameObject[] gameObjects;
     public int nb;
+
+    /// <summary>
+    /// Nombre d'entités qu'il reste à générer
+    /// </summary>
     private int generes;
 
     // Use this for initialization
-    void Awake()
+    void Start()
     {
         if (nb < 0)
             nb = 10;

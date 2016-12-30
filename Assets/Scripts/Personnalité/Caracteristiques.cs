@@ -1,27 +1,50 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 
 public class Caracteristiques : MonoBehaviour {
 
     public Material etudiantInfecte;
     public Material etudiant;
     public Material etudiantImmunise;
-    public UnityEngine.AI.NavMeshAgent nav;
+    public NavMeshAgent nav;
 
+    /// <summary>
+    /// Si vrai, la personne est malade
+    /// </summary>
     public bool infecte = false;
-    public bool immunise = false;
-    public bool peur = false;
-	public bool soignable = true;
-    public bool suivi = false;
+
+    /// <summary>
+    /// Si vrai, la personne ne peut pas être malade (temporaire)
+    /// </summary>
     public bool resistant = false;
 
-    // Use this for initialization
+    /// <summary>
+    /// Si vrai, la personne ne peut pas être malade (définitif)
+    /// </summary>
+    public bool immunise = false;
+
+    /// <summary>
+    /// Si vrai, la personne peut être soignée
+    /// </summary>
+	public bool soignable = true;
+
+    /// <summary>
+    /// Si vrai, la personne est suivie par un autre personnage inconnu
+    /// </summary>
+    public bool suivi = false;
+
+    /// <summary>
+    /// Méthode d'initialisation du script
+    /// </summary>
     void Start () 
     {
         
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+    /// Méthode appelée une fois par frame
+    /// </summary>
 	void Update () 
     {
         if (tag.Equals("Satan"))
@@ -39,6 +62,10 @@ public class Caracteristiques : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Méthode appelée lors d'une "collision à distance"
+    /// </summary>
+    /// <param name="other">La collision</param>
     void OnTriggerEnter(Collider other)
     {
         GameObject source = other.gameObject;
@@ -50,6 +77,10 @@ public class Caracteristiques : MonoBehaviour {
             GetComponent<Caracteristiques>().desinfecter();
     }
 
+    /// <summary>
+    /// Méthode appelée tant que la "collision à distance" a toujours lieu
+    /// </summary>
+    /// <param name="other">La collision</param>
     void OnTriggerStay(Collider other)
     {
         GameObject source = other.gameObject;
@@ -58,11 +89,18 @@ public class Caracteristiques : MonoBehaviour {
             GetComponent<Caracteristiques>().desinfecter();
     }
 
+    /// <summary>
+    /// Méthode appelée lorsque la "collision à distance" prend fin
+    /// </summary>
+    /// <param name="other"></param>
     void OnTriggerExit(Collider other)
     {
         resistant = false;
     }
 
+    /// <summary>
+    /// Permet d'infecter des étudiants, et de redéfinir leur IA aléatoirement
+    /// </summary>
     public void infecter()
     {
         if (!infecte && !immunise && !resistant)
@@ -74,17 +112,18 @@ public class Caracteristiques : MonoBehaviour {
 
             int rd = Random.Range(0, 101);
 
-            if (rd < 10)
+            // Changement d'attitude
+            if (rd < 10) // 10%
             {
                 GetComponent<IA>().agressif();
                 GameObject.Find("ENSC").GetComponent<UIController>().upAgressif();
             }
-            else if (rd < 40)
+            else if (rd < 40) // 30%
             {
                 GetComponent<IA>().assistance();
                 GameObject.Find("ENSC").GetComponent<UIController>().upAssistance();
             }
-            else if (rd < 50)
+            else if (rd < 50) // 10%
             {
                 GetComponent<IA>().peur();
                 GameObject.Find("ENSC").GetComponent<UIController>().upPeur();
@@ -92,6 +131,9 @@ public class Caracteristiques : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Permet de soigner les étudiants malades
+    /// </summary>
     public void desinfecter()
     {
         if (infecte)
@@ -111,6 +153,7 @@ public class Caracteristiques : MonoBehaviour {
                 }
             }
 
+            /* On redonne une IA passive aux étudiants soignés */
             if (GetComponent<IA>().isAgressif())
             {
                 GetComponent<IA>().passif();

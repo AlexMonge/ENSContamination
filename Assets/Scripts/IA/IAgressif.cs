@@ -44,6 +44,10 @@ public class IAgressif : IIA {
             mutation();
     }
 
+    /// <summary>
+    /// Permet de chercher une victime
+    /// </summary>
+    /// <returns></returns>
     public Transform chercherVictime()
     {
         GameObject victime = plusProche("Personnage", true);
@@ -51,6 +55,12 @@ public class IAgressif : IIA {
         return (victime == null) ? null : victime.transform;
     }
 
+    /// <summary>
+    /// Permet de trouver l'entité la plus proche
+    /// </summary>
+    /// <param name="tag">Tag de l'entité</param>
+    /// <param name="victimeSaine">Si vrai, la victime cherchée ne sera pas malade</param>
+    /// <returns>La victime la plus proche</returns>
     public GameObject plusProche(string tag, bool victimeSaine)
     {
         GameObject[] gos = GameObject.FindGameObjectsWithTag(tag);
@@ -77,6 +87,11 @@ public class IAgressif : IIA {
         return proche;
     }
 
+    /// <summary>
+    /// Permet de savoir si un soigneur est proche d'une position ou non
+    /// </summary>
+    /// <param name="position">La position à évaluer</param>
+    /// <returns>Vrai si un soigneur est proche de la position, faux sinon</returns>
     private bool soigneurProche(Vector3 position)
     {
         GameObject[] soigneurs = GameObject.FindGameObjectsWithTag("Boss");
@@ -92,6 +107,9 @@ public class IAgressif : IIA {
         return false;
     }
 
+    /// <summary>
+    /// Permet de faire muter le microbe
+    /// </summary>
     private void mutation()
     {
         UIController uic = GameObject.Find("ENSC").GetComponent<UIController>();

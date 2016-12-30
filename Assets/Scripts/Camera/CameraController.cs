@@ -5,7 +5,10 @@ public class CameraController : MonoBehaviour
 {
     public Camera[] cameras;
 
-    int active = 0;
+    /// <summary>
+    /// L'identifiant de la caméra active dans le tableau
+    /// </summary>
+    private int active = 0;
 
     void Start()
     {
@@ -23,7 +26,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        //use whatever button you want to toggle
+        // Si on presse Flèche_Haut, on passe à la caméra suivante
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             ++active;
@@ -39,6 +42,7 @@ public class CameraController : MonoBehaviour
             cameras[active].enabled = true;
         }
 
+        // Si on presse Flèche_Bas, on passe à la caméra précédente
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             --active;

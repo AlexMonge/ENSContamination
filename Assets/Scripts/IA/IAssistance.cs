@@ -44,9 +44,13 @@ public class IAssistance : IIA {
         }
     }
 
+    /// <summary>
+    /// Permet de trouver le soigneur le plus proche
+    /// </summary>
+    /// <returns>Le Transform du soigneur le plus proche</returns>
     private Transform chercherSoigneur()
     {
-        GameObject victime = plusProche("Boss", false);
+        GameObject victime = plusProche("Boss");
 
         if (victime != null)
             return victime.transform;
@@ -54,7 +58,12 @@ public class IAssistance : IIA {
             return null;
     }
 
-    private GameObject plusProche(string tag, bool victimeSaine)
+    /// <summary>
+    /// Méthode permettant de trouver l'entité la plus proche
+    /// </summary>
+    /// <param name="tag">Tag de l'entité</param>
+    /// <returns></returns>
+    private GameObject plusProche(string tag)
     {
         GameObject[] gos = GameObject.FindGameObjectsWithTag(tag);
         GameObject proche = null;

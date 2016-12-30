@@ -37,30 +37,45 @@ public class IA : MonoBehaviour {
         ia.Update(); 
     }
 
+    /// <summary>
+    /// Redéfinir l'IA pour un comportement passif
+    /// </summary>
     public void passif()
     {
         ia = new IPassif(caractere);
         ia.Start(gameObject);
     }
 
+    /// <summary>
+    /// Redéfinir l'IA pour un comportement de médecin (va vers les malades)
+    /// </summary>
     public void soigneur()
     {
         ia = new ISoigneur(caractere);
         ia.Start(gameObject);
     }
 
+    /// <summary>
+    /// Redéfinir l'IA pour un comportement agressif
+    /// </summary>
     public void agressif()
     {
         ia = new IAgressif(caractere);
         ia.Start(gameObject);
     }
 
+    /// <summary>
+    /// Redéfinir l'IA pour un comportement de recherche d'assistance
+    /// </summary>
     public void assistance()
     {
         ia = new IAssistance(caractere);
         ia.Start(gameObject);
     }
 
+    /// <summary>
+    /// Redéfinir l'IA pour un comportement de peur
+    /// </summary>
     public void peur()
     {
         ia = new IPeur(caractere);
