@@ -70,11 +70,14 @@ public class Caracteristiques : MonoBehaviour {
     {
         GameObject source = other.gameObject;
 
-        if (((source.tag.Equals("Personnage") && source.GetComponent<Caracteristiques>().isInfecte()) || source.tag.Equals("Satan")))
-            GetComponent<Caracteristiques>().infecter();
+        if (tag.Equals("Personnage"))
+        {
+            if ((source.tag.Equals("Personnage") && source.GetComponent<Caracteristiques>().isInfecte()) || source.tag.Equals("Satan"))
+                GetComponent<Caracteristiques>().infecter();
 
-        if (source.tag.Equals("Boss") && soignable && infecte)
-            GetComponent<Caracteristiques>().desinfecter();
+            if (source.tag.Equals("Boss") && soignable && infecte)
+                GetComponent<Caracteristiques>().desinfecter();
+        }
     }
 
     /// <summary>

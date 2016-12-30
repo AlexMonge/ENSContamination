@@ -30,7 +30,7 @@ public class IPassif : IIA {
         {
             movingTo = destination.position - gameObject.transform.position;
 
-            if (movingTo.magnitude < 5)
+            if (movingTo.magnitude < 4)
             {
                 sleepSeconds(Random.Range(3, 6));
                 destination = initDestination();
@@ -52,7 +52,7 @@ public class IPassif : IIA {
         movingTo = destination.position - gameObject.transform.position;
 
 
-        while (movingTo.magnitude < 5)
+        while (movingTo.magnitude < 4)
         {
             destination = initDestination();
 
@@ -78,6 +78,8 @@ public class IPassif : IIA {
 
         if (zone >= 0 && zone < 6)
             return chercherLieux("Toilettes", true, 0);
+        else if (zone >= 6 && zone < 10)
+            return chercherLieux("Administration", false, 1);
         else
         {
             zone = Random.Range(0, 101);
