@@ -10,7 +10,7 @@ namespace UnityEngine {
         /// Tableau définissant le caractère propre à une personne.
         /// Dans la version actuelle :
         ///     - Premier élément   -> préfère les salles info
-        ///     - Deuxième élément  -> préfère la bibliothèque
+        ///     - Deuxième élément  -> préfère le foyer
         ///     - Troisième élément -> préfère les salles de cours
         ///     - Quatrième élément -> préfère le patio
         /// </summary>
@@ -22,14 +22,14 @@ namespace UnityEngine {
 
 			int randMax = 101;
 			randMax -= caractere[(int) ECaractere.INFORMATIQUE] = Random.Range(0, randMax);
-			randMax -= caractere[(int)ECaractere.BIBLI] = Random.Range(0, randMax);
+			randMax -= caractere[(int)ECaractere.FOYER] = Random.Range(0, randMax);
 			randMax -= caractere[(int)ECaractere.SALLECOURS] = Random.Range(0, randMax);
 			caractere[(int)ECaractere.PAUSE] = randMax - 1;
 
             StringBuilder sb = new StringBuilder();
             sb.Append("INFO : ");
             sb.Append(caractere[0]);
-            sb.Append(" | BIBLI : ");
+            sb.Append(" | FOYER : ");
             sb.Append(caractere[1]);
             sb.Append(" | COURS : ");
             sb.Append(caractere[2]);

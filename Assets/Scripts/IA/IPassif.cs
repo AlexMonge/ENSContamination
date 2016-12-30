@@ -85,17 +85,19 @@ public class IPassif : IIA {
             if (caractere.inRandomRange(zone, ECaractere.INFORMATIQUE))
                 return chercherLieux("Info", false, 4);
 
-            if (caractere.inRandomRange(zone, ECaractere.BIBLI))
+            if (caractere.inRandomRange(zone, ECaractere.FOYER))
                 return chercherLieux("Foyer", false, 2);
 
             if (caractere.inRandomRange(zone, ECaractere.SALLECOURS))
             {
-                zone = Random.Range(0, 2);
+                zone = Random.Range(0, 3);
 
                 if (zone == 0)
                     return chercherLieux("O108", false, 2);
-                else
+                else if (zone == 1)
                     return chercherLieux("S101", false, 3);
+                else
+                    return chercherLieux("N103", false, 2);
             }
 
             if (caractere.inRandomRange(zone, ECaractere.PAUSE))
