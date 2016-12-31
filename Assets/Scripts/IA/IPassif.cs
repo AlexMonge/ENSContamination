@@ -40,37 +40,18 @@ public class IPassif : IIA {
                 }
             }
             else
-                if (Time.realtimeSinceStartup - stopSleepAt > 0)
             {
-                Rigidbody body = gameObject.GetComponent<Rigidbody>();
-                body.isKinematic = false;
+                if (Time.realtimeSinceStartup - stopSleepAt > 0)
+                {
+                    Rigidbody body = gameObject.GetComponent<Rigidbody>();
+                    body.isKinematic = false;
 
-                isSleeping = false;
+                    isSleeping = false;
+                }
             }
         }
         else
             destination = initDestination();
-    }
-
-    IEnumerator attente()
-    {
-        movingTo = destination.position - gameObject.transform.position;
-
-
-        while (movingTo.magnitude < 4)
-        {
-            destination = initDestination();
-
-            if (attendre == true)
-            {
-                yield return new WaitForSeconds(2);
-            }
-            else
-                yield return null;
-
-            agent.SetDestination(destination.position + variationArrivee);
-        }
-
     }
 
     /// <summary>
