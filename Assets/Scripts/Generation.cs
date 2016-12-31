@@ -4,7 +4,6 @@ using System.Collections;
 public class Generation : MonoBehaviour {
 
     public GameObject[] gameObjects;
-    public int nb;
 
     /// <summary>
     /// Nombre d'entités qu'il reste à générer
@@ -14,8 +13,10 @@ public class Generation : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        if (nb < 0)
-            nb = 10;
+        int nb = Constantes.nbEtudiants;
+
+        if (nb < 0 || nb > 160)
+            nb = 160;
 
         generes = nb;
     }
