@@ -34,6 +34,8 @@ public class Caracteristiques : MonoBehaviour {
     /// </summary>
     public bool suivi = false;
 
+    #region Méthodes
+
     /// <summary>
     /// Méthode d'initialisation du script
     /// </summary>
@@ -177,8 +179,33 @@ public class Caracteristiques : MonoBehaviour {
         }
     }
 
+    #endregion
+
+    #region Accesseurs
+
+    /// <summary>
+    /// Permet de redéfinir l'état d'infection de l'entité
+    /// </summary>
+    /// <param name="infecte">Infecter ?</param>
     public void setInfecte(bool infecte) { this.infecte = infecte; }
+
+    /// <summary>
+    /// Permet de savoir si l'entité est infectée
+    /// </summary>
+    /// <returns>Vrai si l'entité est infectée, faux sinon</returns>
     public bool isInfecte() { return infecte; }
+
+    /// <summary>
+    /// Permet de savoir si l'entité est immunisée
+    /// </summary>
+    /// <returns>Vrai si l'entité est immunisée, faux sinon</returns>
     public bool isImmunise() { return immunise; }
+
+    /// <summary>
+    /// Permet de savoir si l'entité est résistante
+    /// </summary>
+    /// <returns>Vrai si l'entité est résistante, faux sinon</returns>
     public bool isResistant() { return resistant; }
+
+    #endregion
 }

@@ -3,19 +3,25 @@ using System.Collections;
 
 public class Generation : MonoBehaviour {
 
+    /// <summary>
+    /// Tableau des GameObjects à générer
+    /// </summary>
     public GameObject[] gameObjects;
-    public int nb;
 
     /// <summary>
     /// Nombre d'entités qu'il reste à générer
     /// </summary>
     private int generes;
 
+    #region Méthodes
+
     // Use this for initialization
     void Start()
     {
-        if (nb < 0)
-            nb = 10;
+        int nb = Constantes.nbEtudiants;
+
+        if (nb < 0 || nb > 160)
+            nb = 160;
 
         generes = nb;
     }
@@ -31,4 +37,6 @@ public class Generation : MonoBehaviour {
             GetComponent<UIController>().ajouterPersonne();
         }
     }
+
+    #endregion
 }

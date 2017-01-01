@@ -3,16 +3,53 @@ using System.Collections;
 
 public class ISoigneur : IIA {
 
+    /// <summary>
+    /// Point de départ de l'entité
+    /// </summary>
     private Transform bureau;
+
+    /// <summary>
+    /// Point de destination de l'entité
+    /// </summary>
     private Transform destination;
+
+    /// <summary>
+    /// Agent gérant le déplacement
+    /// </summary>
     private UnityEngine.AI.NavMeshAgent agent;
+
+    /// <summary>
+    /// Différence entre la position de l'entité et sa destination
+    /// </summary>
     private Vector3 movingTo;
+
+    /// <summary>
+    /// Permet de gérer l'animation de l'entité
+    /// </summary>
     private Animator animator;
+
+    /// <summary>
+    /// Définit qui suit l'entité
+    /// </summary>
     private GameObject suit;
+
+    /// <summary>
+    /// L'entité
+    /// </summary>
     private GameObject gameObject;
+
+    /// <summary>
+    /// Caractère de l'entité
+    /// </summary>
     private Caractere caractere;
 
+    #region Constructeurs
+
     public ISoigneur(Caractere caractere) { this.caractere = caractere; }
+
+    #endregion
+
+    #region Méthodes
 
     public void Start(GameObject gameObject)
     {
@@ -23,6 +60,7 @@ public class ISoigneur : IIA {
         if (animator != null) animator.SetInteger("Marche", 0);
         suit = null;
 
+        // On initialise le bureau de départ de chaque soigneur
         switch (gameObject.name)
         {
             case "Bernard Claverie":
@@ -43,16 +81,23 @@ public class ISoigneur : IIA {
         }
     }
 
+    /// <summary>
+    /// Déplacement du soigneur
+    /// </summary>
     public void Update()
     {
         if (animator != null) animator.SetInteger("Marche", 1);
         destination = chercherVictime();
 
+        // Si la destination est nulle :
+        // - s'il y a des victimes, on cherche une victime
+        // - s'il n'y a pas de victime, le soigneur retourne à son bureau
         if (destination != null)
         {
             agent.SetDestination(destination.position);
             movingTo = destination.position - gameObject.transform.position;
 
+            // Lorsque l'entité soigne une victime, elle cherche une nouvelle victime proche d'elle à soigner
             if (movingTo.magnitude < 2)
             {
                 if (animator != null) animator.SetInteger("Marche", 0);
@@ -122,6 +167,9 @@ public class ISoigneur : IIA {
         return proche;
     }
 
+    #endregion
+
+    #region Accesseurs
 
     public bool isAgressif()
     {
@@ -147,4 +195,6 @@ public class ISoigneur : IIA {
     {
         return false;
     }
+
+    #endregion
 }

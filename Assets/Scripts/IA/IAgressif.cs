@@ -3,13 +3,38 @@ using System.Collections;
 
 public class IAgressif : IIA {
 
+    /// <summary>
+    /// Point de destination de l'entité
+    /// </summary>
     private Transform destination;
+
+    /// <summary>
+    /// Agent gérant le déplacement
+    /// </summary>
     private UnityEngine.AI.NavMeshAgent agent;
+
+    /// <summary>
+    /// Différence entre la position de l'entité et sa destination
+    /// </summary>
     private Vector3 movingTo;
+
+    /// <summary>
+    /// L'entité
+    /// </summary>
     private GameObject gameObject;
+
+    /// <summary>
+    /// Caractère de l'entité
+    /// </summary>
     private Caractere caractere;
 
+    #region Constructeurs
+
     public IAgressif(Caractere caractere) { this.caractere = caractere; }
+
+    #endregion
+
+    #region Méthodes
 
     public void Start(GameObject gameObject)
     {
@@ -17,10 +42,15 @@ public class IAgressif : IIA {
         this.gameObject = gameObject;
     }
 
+    /// <summary>
+    /// Déplacement de l'entité
+    /// </summary>
     public void Update()
     {
+        // Va chercher à contaminer une victime proche de lui (calcul à chaque frame)
         destination = chercherVictime();
 
+        // Va se diriger vers sa victime
         if (destination != null)
         {
             agent.SetDestination(destination.position);
@@ -36,10 +66,12 @@ public class IAgressif : IIA {
         {
             destination = chercherVictime();
 
+            // Si ne peut plus contaminer, retourne à son point de départ
             if (destination != null)
                 agent.SetDestination(GameObject.Find("DepartMicrobe").transform.position);
         }
 
+        // Mutation du microbe
         if (gameObject.tag.Equals("Satan"))
             mutation();
     }
@@ -108,7 +140,7 @@ public class IAgressif : IIA {
     }
 
     /// <summary>
-    /// Permet de faire muter le microbe
+    /// Permet de faire muter le microbe en fonction du nombre d'infectés
     /// </summary>
     private void mutation()
     {
@@ -118,15 +150,15 @@ public class IAgressif : IIA {
         {
             double prctgConta = uic.getPourcentageContamines();
 
-            if (prctgConta < 25f)
+            if (prctgConta < 25d) // < 25% : vitesse normale
             {
                 agent.speed = 3.666f;
             }
-            else if (prctgConta < 50f)
+            else if (prctgConta < 50d) // < 50% : vitesse plus basse
             {
                 agent.speed = 2f;
             }
-            else
+            else // >= 50% : retourne à son départ -> inactif temporairement
             {
                 agent.speed = 5f;
                 agent.SetDestination(GameObject.Find("DepartMicrobe").transform.position);
@@ -134,6 +166,9 @@ public class IAgressif : IIA {
         }
     }
 
+    #endregion
+
+    #region Accesseurs
 
     public bool isAgressif()
     {
@@ -159,4 +194,6 @@ public class IAgressif : IIA {
     {
         return false;
     }
+
+    #endregion
 }

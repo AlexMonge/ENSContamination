@@ -16,10 +16,16 @@ namespace UnityEngine {
         /// </summary>
 		private int[] caractere;
 
-		public Caractere ()
+        #region Constructeurs
+
+        /// <summary>
+        /// Constructeur par défaut de Caractere
+        /// </summary>
+        public Caractere ()
 		{
             caractere = new int[4];
 
+            // Génération des caractères en %age
 			int randMax = 101;
 			randMax -= caractere[(int) ECaractere.INFORMATIQUE] = Random.Range(0, randMax);
 			randMax -= caractere[(int)ECaractere.FOYER] = Random.Range(0, randMax);
@@ -35,9 +41,11 @@ namespace UnityEngine {
             sb.Append(caractere[2]);
             sb.Append(" | PAUSE : ");
             sb.Append(caractere[3]);
-
-            Debug.Log(sb.ToString());
         }
+
+        #endregion
+
+        #region Méthodes 
 
         /// <summary>
         /// Permet de savoir si <strong>val</strong> appartient à un caractère spécifié
@@ -45,7 +53,7 @@ namespace UnityEngine {
         /// <param name="val">Une valeur comprise entre 0 et 100</param>
         /// <param name="car">Un caractère</param>
         /// <returns></returns>
-		public bool inRandomRange(int val, ECaractere car) 
+        public bool inRandomRange(int val, ECaractere car) 
 		{
 			if (val < calculValueCarac((int) car))
 				return true;
@@ -68,5 +76,7 @@ namespace UnityEngine {
 
 			return total;
 		}
-	}
+
+        #endregion
+    }
 }
