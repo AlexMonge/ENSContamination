@@ -5,13 +5,38 @@ using UnityEngine;
 
 public class IAssistance : IIA {
 
+    /// <summary>
+    /// Point de destination de l'entité
+    /// </summary>
     private Transform destination;
+
+    /// <summary>
+    /// Agent gérant le déplacement
+    /// </summary>
     private UnityEngine.AI.NavMeshAgent agent;
+
+    /// <summary>
+    /// Différence entre la position de l'entité et sa destination
+    /// </summary>
     private Vector3 movingTo;
+
+    /// <summary>
+    /// L'entité
+    /// </summary>
     private GameObject gameObject;
+
+    /// <summary>
+    /// Caractère de l'entité
+    /// </summary>
     private Caractere caractere;
 
+    #region Constructeurs
+
     public IAssistance(Caractere caractere) { this.caractere = caractere; }
+
+    #endregion
+
+    #region Méthodes
 
     public void Start(GameObject gameObject)
     {
@@ -22,8 +47,10 @@ public class IAssistance : IIA {
 
     public void Update()
     {
+        // Va chercher un soigneur proche de lui (calcul à chaque frame)
         destination = chercherSoigneur();
 
+        // L'entité va se diriger vers le soigneur
         if (destination != null)
         {
             agent.SetDestination(destination.position);
@@ -86,6 +113,10 @@ public class IAssistance : IIA {
         return proche;
     }
 
+    #endregion
+
+    #region Accesseurs
+
     public bool isAgressif()
     {
         return false;
@@ -110,4 +141,6 @@ public class IAssistance : IIA {
     {
         return false;
     }
+
+    #endregion
 }

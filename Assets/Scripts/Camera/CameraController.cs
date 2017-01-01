@@ -3,6 +3,9 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
+    /// <summary>
+    /// Tableau des caméras de la scène
+    /// </summary>
     public Camera[] cameras;
 
     /// <summary>
@@ -10,16 +13,17 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private int active = 0;
 
+    #region Méthodes
+
     void Start()
     {
+        // On active uniquement la 1ere caméra
         if (cameras.Length > 0)
         {
             cameras[0].enabled = true;
 
             for (int i = 1; i < cameras.Length; ++i)
-            {
                 cameras[i].enabled = false;
-            }
         }
     }
 
@@ -58,4 +62,6 @@ public class CameraController : MonoBehaviour
             cameras[active].enabled = true;
         }
     }
+
+    #endregion
 }

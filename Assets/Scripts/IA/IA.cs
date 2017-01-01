@@ -3,13 +3,25 @@ using System.Collections;
 
 public class IA : MonoBehaviour {
 
-    public IIA ia;
+    /// <summary>
+    /// Implémentation des classes implémentant l'interface IA
+    /// Design Pattern Stategy
+    /// </summary>
+    private IIA ia;
+
+    /// <summary>
+    /// Caractère de l'entité
+    /// </summary>
     private Caractere caractere;
+
+
+    #region Méthodes
 
     void Start()
     {
         caractere = new Caractere();
-
+        
+        // On donne l'IA aux entités en fonction de leur tag
         switch (this.tag)
         {
             case "Personnage":
@@ -82,9 +94,38 @@ public class IA : MonoBehaviour {
         ia.Start(gameObject);
     }
 
+    #endregion
+
+    #region Accesseurs
+
+    /// <summary>
+    /// Permet de savoir si l'entité est agressive
+    /// </summary>
+    /// <returns>Vrai si l'entité est agressive, faux sinon</returns>
     public bool isAgressif() { return ia.isAgressif(); }
+
+    /// <summary>
+    /// Permet de savoir si l'entité est passive
+    /// </summary>
+    /// <returns>Vrai si l'entité est passive, faux sinon</returns>
     public bool isPassif() { return ia.isPassif(); }
+
+    /// <summary>
+    /// Permet de savoir si l'entité est un soigneur
+    /// </summary>
+    /// <returns>Vrai si l'entité est un soigneur, faux sinon</returns>
     public bool isSoigneur() { return ia.isSoigneur(); }
+
+    /// <summary>
+    /// Permet de savoir si l'entité a besoin d'assistance
+    /// </summary>
+    /// <returns>Vrai si l'entité a besoin d'assistance, faux sinon</returns>
     public bool isAssistance() { return ia.isAssistance(); }
+
+    /// <summary>
+    /// Permet de savoir si l'entité a peur
+    /// </summary>
+    /// <returns>Vrai si l'entité a peur, faux sinon</returns>
     public bool isPeur() { return ia.isPeur(); }
+    #endregion
 }

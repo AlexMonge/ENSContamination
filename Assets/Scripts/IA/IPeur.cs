@@ -4,14 +4,43 @@ using UnityEngine;
 
 public class IPeur : IIA {
 
+    /// <summary>
+    /// Point de destination de l'entité
+    /// </summary>
     private Transform destination;
+
+    /// <summary>
+    /// L'entité
+    /// </summary>
     private GameObject gameObject;
+
+    /// <summary>
+    /// Agent gérant le déplacement
+    /// </summary>
     private UnityEngine.AI.NavMeshAgent agent;
+
+    /// <summary>
+    /// Différence entre la position de l'entité et sa destination
+    /// </summary>
     private Vector3 movingTo;
+
+    /// <summary>
+    /// Caractère de l'entité
+    /// </summary>
     private Caractere caractere;
+
+    /// <summary>
+    /// Variable gérant la variation de l'arrivée (cercle aléatoire)
+    /// </summary>
     private Vector3 variationArrivee;
 
+    #region Constructeurs
+
     public IPeur(Caractere caractere) { this.caractere = caractere; }
+
+    #endregion
+
+    #region Méthodes
 
     public void Start(GameObject gameObject)
     {
@@ -19,8 +48,12 @@ public class IPeur : IIA {
         agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
+    /// <summary>
+    /// Déplacement du peureux
+    /// </summary>
     public void Update()
     {
+        // Le peureux va chercher refuge dans une des salles du bâtiment EST, puis y reste
         if (destination == null)
         {
             destination = chercherRefuge("EST", false, 1);
@@ -63,6 +96,10 @@ public class IPeur : IIA {
         return position;
     }
 
+    #endregion
+
+    #region Accesseurs
+
     public bool isAgressif()
     {
         return false;
@@ -87,4 +124,6 @@ public class IPeur : IIA {
     {
         return true;
     }
+
+    #endregion
 }

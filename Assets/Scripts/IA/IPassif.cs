@@ -3,17 +3,53 @@ using System.Collections;
 
 public class IPassif : IIA {
 
-    public Transform destination;
+    /// <summary>
+    /// Point de destination de l'entité
+    /// </summary>
+    private Transform destination;
+
+    /// <summary>
+    /// Agent gérant le déplacement
+    /// </summary>
     private UnityEngine.AI.NavMeshAgent agent;
+
+    /// <summary>
+    /// Différence entre la position de l'entité et sa destination
+    /// </summary>
     private Vector3 movingTo;
-    private bool attendre = false;
+
+    /// <summary>
+    /// Variable gérant la variation de l'arrivée (cercle aléatoire)
+    /// </summary>
     private Vector3 variationArrivee;
+
+    /// <summary>
+    /// L'entité
+    /// </summary>
     private GameObject gameObject;
+
+    /// <summary>
+    /// Permet de gérer l'attende de l'entité
+    /// </summary>
     private bool isSleeping;
+
+    /// <summary>
+    /// Temps à partir duquel l'entité peut reprendre son déplacement
+    /// </summary>
     private float stopSleepAt;
+
+    /// <summary>
+    /// Caractère de l'entité
+    /// </summary>
     private Caractere caractere;
 
+    #region Constructeurs
+
     public IPassif(Caractere caractere) { this.caractere = caractere; }
+
+    #endregion
+
+    #region Méthodes
 
     public void Start(GameObject gameObject)
     {
@@ -24,6 +60,9 @@ public class IPassif : IIA {
         agent.SetDestination(destination.position + variationArrivee);
     }
 
+    /// <summary>
+    /// Déplacement de l'entité
+    /// </summary>
     public void Update()
     {
         if (destination != null)
@@ -32,6 +71,7 @@ public class IPassif : IIA {
             {
                 movingTo = destination.position - gameObject.transform.position;
 
+                // Lorsque l'entité est arrivée, elle dort pendant 3 - 5 secondes, puis cherche une nouvelle destination
                 if (movingTo.magnitude < 4)
                 {
                     sleepSeconds(Random.Range(3, 6));
@@ -142,6 +182,9 @@ public class IPassif : IIA {
         isSleeping = true;
     }
 
+    #endregion
+
+    #region Accesseurs
 
     public bool isAgressif()
     {
@@ -167,4 +210,6 @@ public class IPassif : IIA {
     {
         return false;
     }
+
+    #endregion
 }

@@ -7,6 +7,7 @@ public class TimerScript : MonoBehaviour {
 
 	public Text timerText;
 	private float startTime;
+
 	// Use this for initialization
 	void Start () {
 		startTime = Time.time;
